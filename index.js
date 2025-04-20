@@ -1,11 +1,12 @@
 import express from "express";
 import router from "./app.js";
 import cors from "cors";
+import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import session from "express-session";
 import passport from "passport";
-import dotenv from "dotenv";
 import initialize from "./config/passport.js";
+import songRoute from "./routes/song.route.js";
 
 dotenv.config();
 const app = express();
@@ -37,6 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/v1", router);
+app.use("/api/v1/song", songRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

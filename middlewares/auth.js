@@ -1,4 +1,4 @@
-import response from "../helper/response";
+import response from "../helper/response.js";
 
 const auth = (req, res, next) => {
   if (req.isAuthenticated()) {
