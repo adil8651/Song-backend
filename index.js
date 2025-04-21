@@ -25,13 +25,13 @@ app.use(
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: "your-secret",
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60,
+      secure: true,
+      sameSite: "None",
+      httpOnly: true,
     },
   })
 );
