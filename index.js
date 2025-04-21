@@ -30,7 +30,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: false,
-      maxAge: 60000,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60,
     },
   })
 );
