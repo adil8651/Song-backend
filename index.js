@@ -38,6 +38,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Root path for health check
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to the Songs API",
@@ -45,22 +46,27 @@ app.get("/", (req, res) => {
   });
 });
 
+// Create API router for /api path
 const apiRouter = express.Router();
-apiRouter.use("/v1", router);
-apiRouter.use("/v1/song", songRoute);
 
+// API test route
 apiRouter.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to the Songs API",
     status: "Server is running",
     version: "1.0.0",
     endpoints: {
-      songs: "/api/v1/song",
-      auth: "/api/v1",
+      songs: "/v1/song",
+      auth: "/v1",
     },
   });
 });
 
+// Mount routes on the API router
+apiRouter.use("/v1", router);
+apiRouter.use("/v1/song", songRoute);
+
+// Mount the API router at /api
 app.use("/api", apiRouter);
 
 app.listen(port, () => {
