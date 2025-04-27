@@ -4,7 +4,12 @@ import multer from "multer";
 import auth from "../middlewares/auth.js";
 const storage = multer.memoryStorage();
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 50 * 1024 * 1024,
+  },
+});
 
 const router = express.Router();
 router.post(
