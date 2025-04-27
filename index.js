@@ -10,7 +10,7 @@ import songRoute from "./routes/song.route.js";
 
 dotenv.config();
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 connectDB();
 
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: process.env.COOKIE_SECURE === "true",
       sameSite: "lax",
       maxAge: 1000 * 60 * 60,
     },
@@ -42,16 +42,26 @@ app.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to the Songs API",
     status: "Server is running",
+  });
+});
+
+const apiRouter = express.Router();
+apiRouter.use("/v1", router);
+apiRouter.use("/v1/song", songRoute);
+
+apiRouter.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to the Songs API",
+    status: "Server is running",
     version: "1.0.0",
     endpoints: {
-      songs: "/v1/song",
-      auth: "/v1",
+      songs: "/api/v1/song",
+      auth: "/api/v1",
     },
   });
 });
 
-app.use("/v1", router);
-app.use("/v1/song", songRoute);
+app.use("/api", apiRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
