@@ -38,19 +38,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Root path for health check
+// Root path test route
 app.get("/", (req, res) => {
-  res.status(200).json({
-    message: "Welcome to the Songs API",
-    status: "Server is running",
-  });
-});
-
-// Create API router for /api path
-const apiRouter = express.Router();
-
-// API test route
-apiRouter.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to the Songs API",
     status: "Server is running",
@@ -62,12 +51,9 @@ apiRouter.get("/", (req, res) => {
   });
 });
 
-// Mount routes on the API router
-apiRouter.use("/v1", router);
-apiRouter.use("/v1/song", songRoute);
-
-// Mount the API router at /api
-app.use("/api", apiRouter);
+// Mount routes directly at the root level
+app.use("/v1", router);
+app.use("/v1/song", songRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
