@@ -4,7 +4,7 @@ import { uploadFileToS3, deleteFileFromS3 } from "../helper/uploadToS3.js";
 
 const addSong = async (req, res) => {
   try {
-    const { name, artist, album, year, duration, language, genre } = req.body;
+    const { title, artist, album, year, duration, language, genre } = req.body;
 
     const audioFile = req.files?.audio?.[0];
     const imageFile = req.files?.image?.[0];
@@ -13,7 +13,7 @@ const addSong = async (req, res) => {
     const image = imageFile ? await uploadFileToS3(imageFile, "images") : null;
 
     const newSong = new Song({
-      name,
+      title,
       artist,
       album,
       year,
