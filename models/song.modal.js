@@ -12,7 +12,7 @@ const songShema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  categories: {
+  genre: {
     type: [String],
     required: true,
   },
